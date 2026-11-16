@@ -1,87 +1,510 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loto Maroc Analyzer</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loto Maroc Analyzer</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #101827;
-            color: white;
-            text-align: center;
-        }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-        header {
-            padding: 35px 15px;
-            background: #172b46;
-        }
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: #101827;
+  color: white;
+}
 
-        h1 {
-            color: #36d6a0;
-            font-size: 30px;
-        }
+.container {
+  max-width: 950px;
+  margin: auto;
+}
 
-        .container {
-            max-width: 800px;
-            margin: 30px auto;
-            padding: 20px;
-        }
+header {
+  text-align: center;
+  padding: 25px 10px;
+}
 
-        .card {
-            background: #1c2b40;
-            padding: 25px;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
+header h1 {
+  color: #f5c542;
+  font-size: 30px;
+}
 
-        button {
-            background: #16b889;
-            color: white;
-            border: none;
-            padding: 13px 25px;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-        }
+header p {
+  color: #bdc8d8;
+}
 
-        footer {
-            color: #9caec2;
-            padding: 25px;
-        }
-    </style>
+.card {
+  background: #1c293b;
+  border: 1px solid #34445a;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #f5c542;
+  font-size: 20px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 130px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #52647b;
+  background: #101827;
+  color: white;
+  font-size: 16px;
+  direction: ltr;
+  text-align: left;
+}
+
+button {
+  border: none;
+  border-radius: 8px;
+  padding: 12px 18px;
+  margin-top: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  background: #f5c542;
+  color: #101827;
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+.secondary {
+  background: #34445a;
+  color: white;
+}
+
+.danger {
+  background: #b83b45;
+  color: white;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.stat {
+  background: #101827;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+}
+
+.stat strong {
+  display: block;
+  font-size: 25px;
+  color: #f5c542;
+  margin-top: 8px;
+}
+
+.number-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.ball {
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  background: #f5c542;
+  color: #101827;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+th, td {
+  padding: 11px 8px;
+  text-align: center;
+  border-bottom: 1px solid #34445a;
+}
+
+th {
+  color: #f5c542;
+}
+
+.group {
+  background: #101827;
+  border-radius: 8px;
+  padding: 14px;
+  margin-top: 12px;
+}
+
+.message {
+  color: #8fe3a1;
+  margin-top: 12px;
+}
+
+.note {
+  color: #bdc8d8;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+@media(max-width: 600px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  body {
+    padding: 10px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-<header>
-    <h1>🎯 Loto Maroc Analyzer</h1>
-    <p>منصة تحليل وإحصائيات اللوتو المغربي</p>
-</header>
-
 <div class="container">
 
-    <div class="card">
-        <h2>مرحباً بك في محلل اللوتو</h2>
-        <p>حلّل نتائج السحوبات السابقة واكتشف الإحصائيات.</p>
-        <button onclick="alert('مرحباً بك! سنضيف أدوات التحليل قريباً.')">
-            ابدأ التحليل
-        </button>
+<header>
+  <h1>🇲🇦 Loto Maroc Analyzer</h1>
+  <p>منصة تحليل نتائج السحوبات والإحصائيات</p>
+</header>
+
+<div class="card">
+  <h2>1. إدخال نتائج السحوبات</h2>
+
+  <p class="note">
+    أدخل كل سحب في سطر مستقل، مع كتابة 6 أرقام من 1 إلى 49.
+    يمكنك الفصل بينها بفاصلة أو مسافة.
+  </p>
+
+  <textarea id="drawInput"
+    placeholder="مثال:
+3, 8, 15, 22, 31, 45
+5, 11, 19, 26, 34, 42"></textarea>
+
+  <button onclick="addDraws()">إضافة النتائج</button>
+  <button class="secondary" onclick="clearInput()">مسح الخانة</button>
+
+  <div id="message" class="message"></div>
+</div>
+
+<div class="card">
+  <h2>2. الإحصائيات العامة</h2>
+
+  <div class="stats">
+    <div class="stat">
+      عدد السحوبات
+      <strong id="drawCount">0</strong>
     </div>
 
-    <div class="card">
-        <h2>📊 الإحصائيات</h2>
-        <p>سنضيف هنا الأرقام الأكثر تكراراً والأقل تكراراً.</p>
+    <div class="stat">
+      مجموع الأرقام المسجلة
+      <strong id="totalNumbers">0</strong>
     </div>
+
+    <div class="stat">
+      الأرقام الممكنة
+      <strong>49</strong>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>3. ترتيب الأرقام حسب التكرار</h2>
+  <p class="note">
+    الأرقام مرتبة من الأكثر ظهوراً إلى الأقل ظهوراً.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>الترتيب</th>
+        <th>الرقم</th>
+        <th>مرات الظهور</th>
+        <th>النسبة</th>
+      </tr>
+    </thead>
+    <tbody id="frequencyTable"></tbody>
+  </table>
+</div>
+
+<div class="card">
+  <h2>4. الأرقام الأكثر ظهوراً</h2>
+  <div id="hotNumbers" class="number-list"></div>
+</div>
+
+<div class="card">
+  <h2>5. الأرقام الأقل ظهوراً</h2>
+  <div id="coldNumbers" class="number-list"></div>
+</div>
+
+<div class="card">
+  <h2>6. إنشاء مجموعات من 6 أرقام</h2>
+
+  <p class="note">
+    يتم إنشاء مجموعات عشوائية دون تكرار الرقم داخل المجموعة.
+    الإحصائيات السابقة لا تجعل أي مجموعة أكثر ضماناً للفوز.
+  </p>
+
+  <button onclick="generateGroups()">إنشاء 5 مجموعات</button>
+
+  <div id="groups"></div>
+</div>
+
+<div class="card">
+  <h2>7. إدارة البيانات</h2>
+  <button class="secondary" onclick="exportData()">تحميل النتائج</button>
+  <button class="danger" onclick="deleteAll()">حذف جميع النتائج</button>
+</div>
+
+<p class="note" style="text-align:center">
+  Loto Maroc Analyzer © 2026
+</p>
 
 </div>
 
-<footer>
-    Loto Maroc Analyzer © 2026
-    <p>أداة إحصائية وليست وسيلة للتنبؤ بنتائج السحب.</p>
-</footer>
+<script>
+
+let draws = [];
+
+try {
+  draws = JSON.parse(
+    localStorage.getItem("lotoDraws") || "[]"
+  );
+
+  if (!Array.isArray(draws)) draws = [];
+} catch (error) {
+  draws = [];
+}
+
+function saveData() {
+  localStorage.setItem("lotoDraws", JSON.stringify(draws));
+}
+
+function addDraws() {
+  const input = document.getElementById("drawInput").value.trim();
+  const message = document.getElementById("message");
+
+  if (!input) {
+    message.textContent = "المرجو إدخال نتائج أولاً.";
+    return;
+  }
+
+  const lines = input.split(/\n+/);
+  let added = 0;
+  let rejected = 0;
+
+  lines.forEach(line => {
+    const values = line.trim().split(/[,\s;]+/).filter(Boolean);
+
+    if (values.length !== 6) {
+      rejected++;
+      return;
+    }
+
+    const nums = values.map(Number);
+
+    const valid =
+      nums.every(n => Number.isInteger(n) && n >= 1 && n <= 49) &&
+      new Set(nums).size === 6;
+
+    if (!valid) {
+      rejected++;
+      return;
+    }
+
+    draws.push(nums.sort((a, b) => a - b));
+    added++;
+  });
+
+  saveData();
+  updateDashboard();
+
+  message.textContent =
+    "تمت إضافة " + added + " سحوبات. النتائج غير المقبولة: " + rejected;
+
+  document.getElementById("drawInput").value = "";
+}
+
+function clearInput() {
+  document.getElementById("drawInput").value = "";
+  document.getElementById("message").textContent = "";
+}
+
+function calculateFrequency() {
+  const frequency = {};
+
+  for (let i = 1; i <= 49; i++) {
+    frequency[i] = 0;
+  }
+
+  draws.forEach(draw => {
+    draw.forEach(number => {
+      frequency[number]++;
+    });
+  });
+
+  return frequency;
+}
+
+function updateDashboard() {
+  const frequency = calculateFrequency();
+
+  document.getElementById("drawCount").textContent = draws.length;
+  document.getElementById("totalNumbers").textContent = draws.length * 6;
+
+  const sorted = Object.entries(frequency)
+    .map(([number, count]) => ({
+      number: Number(number),
+      count
+    }))
+    .sort((a, b) => b.count - a.count || a.number - b.number);
+
+  const table = document.getElementById("frequencyTable");
+  table.innerHTML = "";
+
+  sorted.forEach((item, index) => {
+    const percentage = draws.length
+      ? ((item.count / draws.length) * 100).toFixed(1)
+      : "0.0";
+
+    const row = document.createElement("tr");
+
+    [index + 1, item.number, item.count, percentage + "%"]
+      .forEach(value => {
+        const cell = document.createElement("td");
+        cell.textContent = value;
+        row.appendChild(cell);
+      });
+
+    table.appendChild(row);
+  });
+
+  showBalls(
+    "hotNumbers",
+    sorted.slice(0, 10).map(item => item.number)
+  );
+
+  showBalls(
+    "coldNumbers",
+    [...sorted].reverse().slice(0, 10).map(item => item.number)
+  );
+}
+
+function showBalls(elementId, numbers) {
+  const container = document.getElementById(elementId);
+  container.innerHTML = "";
+
+  numbers.forEach(number => {
+    const ball = document.createElement("div");
+    ball.className = "ball";
+    ball.textContent = number;
+    container.appendChild(ball);
+  });
+}
+
+function generateGroups() {
+  const container = document.getElementById("groups");
+  container.innerHTML = "";
+
+  const frequency = calculateFrequency();
+  const groups = [];
+  const used = new Set();
+
+  for (let i = 0; i < 5; i++) {
+    let group = [];
+    let attempts = 0;
+
+    while (group.length < 6 && attempts < 500) {
+      attempts++;
+
+      const number = Math.floor(Math.random() * 49) + 1;
+
+      if (!group.includes(number)) {
+        group.push(number);
+      }
+    }
+
+    group.sort((a, b) => a - b);
+
+    const key = group.join("-");
+
+    if (!used.has(key)) {
+      used.add(key);
+      groups.push(group);
+    } else {
+      i--;
+    }
+  }
+
+  groups.forEach((group, index) => {
+    const box = document.createElement("div");
+    box.className = "group";
+
+    const title = document.createElement("strong");
+    title.textContent = "المجموعة " + (index + 1);
+    box.appendChild(title);
+
+    const balls = document.createElement("div");
+    balls.className = "number-list";
+
+    group.forEach(number => {
+      const ball = document.createElement("div");
+      ball.className = "ball";
+      ball.textContent = number;
+      balls.appendChild(ball);
+    });
+
+    box.appendChild(balls);
+    container.appendChild(box);
+  });
+}
+
+function exportData() {
+  const content = JSON.stringify(draws, null, 2);
+  const blob = new Blob([content], {
+    type: "application/json"
+  });
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = "loto-maroc-results.json";
+  link.click();
+
+  URL.revokeObjectURL(url);
+}
+
+function deleteAll() {
+  if (!confirm("هل أنت متأكد من حذف جميع النتائج؟")) return;
+
+  draws = [];
+  saveData();
+  updateDashboard();
+
+  document.getElementById("groups").innerHTML = "";
+  document.getElementById("message").textContent =
+    "تم حذف جميع النتائج.";
+}
+
+updateDashboard();
+
+</script>
 
 </body>
 </html>
